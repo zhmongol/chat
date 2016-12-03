@@ -8,13 +8,13 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = untitled2
+TARGET = chat
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        mywidget.cpp
+SOURCES += ../src/main.cpp\
+        ../src/mywidget.cpp
 
-HEADERS  += mywidget.h
+HEADERS  += ../include/mywidget.h
 
-FORMS    += mywidget.ui
+FORMS    += ../desgin/mywidget.ui
