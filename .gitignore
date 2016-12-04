@@ -1,0 +1,8 @@
+
+build-chat-unknown_44d6e4-Debug/*
+
+main/chat.pro.user
+
+*.user
+
+*.o
