@@ -1,4 +1,4 @@
-#include "mywidget.h"
+﻿#include "mywidget.h"
 #include "ui_mywidget.h"
 #include "QDebug"
 #include <QMessageBox>
@@ -12,7 +12,7 @@ myWidget::myWidget(QWidget *parent) :
 
     pe.setColor(QPalette::WindowText, Qt::red);
     ui->statetext->setPalette(pe);
-    ui->statetext->setText("未连接");
+    ui->statetext->setText(QString::fromLocal8Bit("未连接"));
     setFixedSize(440, 395);
 
     connect(ui->closeButton, &QPushButton::clicked, this, &QWidget::close);
@@ -43,14 +43,14 @@ void myWidget::slotstartTcpserver()
     {
         if(m_server->listen(QHostAddress::Any, 33333)) //监听任何脸上66666端口的
         {
-            QMessageBox::about(NULL, "提示", "打开监听端口成功");
+            QMessageBox::about(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("打开监听端口成功"));
         }else
         {
-            QMessageBox::about(NULL, "提示", "打开监听端口失败");
+            QMessageBox::about(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("打开监听端口失败"));
         }
     }else
     {
-        QMessageBox::about(NULL, "提示", "正在监听中。。。");
+        QMessageBox::about(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("正在监听中。。。"));
     }
     connect(m_server, &QTcpServer::newConnection, this, &myWidget::slotnewconnet);
 }
@@ -59,8 +59,8 @@ void myWidget::slotnewconnet()
 {
     pe.setColor(QPalette::WindowText, Qt::blue);
     ui->statetext->setPalette(pe);
-    ui->statetext->setText("已连接");
-    QMessageBox::about(NULL, "提示", "连接成功，可以开始使用了");
+    ui->statetext->setText(QString::fromLocal8Bit("已连接"));
+    QMessageBox::about(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("连接成功，可以开始使用了"));
 
     m_socket = m_server->nextPendingConnection(); //得到连接进来的socket
     connect(m_socket, &QTcpSocket::disconnected, m_socket, &QTcpSocket::deleteLater);
@@ -73,6 +73,7 @@ void myWidget::slotreadmessage()
     QString smsg = QVariant(amsg).toString();
     ui->outputEdit->setAlignment(Qt::AlignLeft);
     ui->outputEdit->insertPlainText(smsg + "\n");
+    ui->outputEdit->textCursor().movePosition(QTextCursor::End);
 }
 
 void myWidget::slotconnetserver()
@@ -86,11 +87,11 @@ void myWidget::slotconnetserver()
     {
         pe.setColor(QPalette::WindowText, Qt::blue);
         ui->statetext->setPalette(pe);
-        ui->statetext->setText("已连接");
-        QMessageBox::about(NULL, "提示", "连接成功");
+        ui->statetext->setText(QString::fromLocal8Bit("已连接"));
+        QMessageBox::about(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("连接成功"));
     }else
     {
-        QMessageBox::about(NULL, "提示", "连接超时");
+        QMessageBox::about(NULL, QString::fromLocal8Bit("提示"), QString::fromLocal8Bit("连接超时"));
     }
     connect(m_socket, &QTcpSocket::readyRead, this, &myWidget::slotreadmessage);
 }
